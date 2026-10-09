@@ -167,16 +167,10 @@
     state.items = (p.items || []).filter(item => food(item.name)).map(item => ({name:food(item.name).name,amount:num(item.amount),unit:item.unit || 'g',price:item.price ?? ''}));
     render(); toast(`Loaded ${p.name || 'profile'}`);
   }
-  function filteredFoods() { return $('foodCollection').value === 'collins' ? DATA.foods.filter(f => f.collinsOption) : DATA.foods; }
   function renderFoodChoices() {
-    const options = filteredFoods();
-    $('foodOptions').innerHTML = options.map(f => `<option value="${safe(f.name)}"></option>`).join('');
-    $('collinsOptions').hidden = $('foodCollection').value !== 'collins';
-    $('collinsOptions').innerHTML = DATA.foods.filter(f => f.collinsOption).map(f => `<article class="collins-option"><div><h3>${safe(f.name.replace('Collins — ',''))}</h3><p>${safe(f.description)}</p><small>Per 100 g: ${round(f.n[0],0)} kcal · ${round(f.n[3],1)} g protein · ${round(f.n[4],1)} g fat</small></div><button type="button" data-collins-add="${safe(f.name)}">Add</button></article>`).join('');
+    $('foodOptions').innerHTML = DATA.foods.map(f => `<option value="${safe(f.name)}"></option>`).join('');
   }
   renderFoodChoices();
-  $('foodCollection').addEventListener('change', () => { $('foodSearch').value=''; renderFoodChoices(); });
-  $('collinsOptions').addEventListener('click', e => { const button=e.target.closest('[data-collins-add]'); if (!button) return; $('foodSearch').value=button.dataset.collinsAdd; $('foodAmount').value='100'; $('foodUnit').value='g'; $('addFood').click(); });
   $('nutrientSpotlight').innerHTML = DATA.nutrients.map(n => `<option value="${n.row}" ${n.row===75?'selected':''}>${safe(n.label)}</option>`).join('');
   refreshProfiles();
   document.querySelectorAll('input, select').forEach(el => {
