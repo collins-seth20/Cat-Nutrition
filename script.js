@@ -94,6 +94,7 @@
     $('foodEstimate').textContent = amount > 0 ? round(amount, 1) : '—';
     $('foodEstimateUnit').textContent = $('weightUnit').value === 'Pounds' ? 'ounces / day' : 'grams / day';
     $('lifeStage').textContent = ({kitten:'Growth',adult:'Adult',gestation:'Gestation',lactation:'Lactation'})[ageStage()];
+    $('breedNote').hidden = $('breed').value !== 'Maine Coon';
   }
   function renderIngredients(t) {
     $('ingredientRows').innerHTML = state.items.map((item, index) => {
@@ -152,11 +153,12 @@
     $('profileSelect').innerHTML = '<option value="">Choose a profile…</option>' + local + samples;
     $('profileSelect').value = state.selectedProfile;
   }
-  function captureProfile() { return {name:$('profileName').value.trim(),cat:$('catName').value,weight:num($('weight').value),weightUnit:$('weightUnit').value,age:num($('age').value),ageUnit:$('ageUnit').value,neuter:$('neuter').value,status:$('status').value,pregnancy:$('pregnancy').value,items:state.items.map(item=>({...item}))}; }
+  function captureProfile() { return {name:$('profileName').value.trim(),cat:$('catName').value,breed:$('breed').value,weight:num($('weight').value),weightUnit:$('weightUnit').value,age:num($('age').value),ageUnit:$('ageUnit').value,neuter:$('neuter').value,status:$('status').value,pregnancy:$('pregnancy').value,items:state.items.map(item=>({...item}))}; }
   function loadProfile(p) {
     if (!p) return;
     $('profileName').value = p.name || '';
     $('catName').value = p.cat || '';
+    $('breed').value = p.breed || 'Domestic shorthair / mixed';
     $('weight').value = p.weight || '';
     $('weightUnit').value = p.weightUnit || 'Pounds';
     $('age').value = p.age ?? '';
@@ -185,6 +187,15 @@
     state.items.push({name:f.name,amount,unit:$('foodUnit').value,price:''});
     $('foodSearch').value = ''; render(); toast(`Added ${f.name}`);
   });
+  $('ezcAddPremix').addEventListener('click', () => {
+    const meatGrams = Math.max(0, num($('ezcMeatGrams').value));
+    if (!meatGrams) return toast('Enter raw boneless meat weight in grams.');
+    const powder = meatGrams * 53.3 / 907;
+    $('ezcPowderAmount').textContent = `Powder for ${round(meatGrams,1)} g meat: ${round(powder,1)} g`;
+    $('foodSearch').value = 'EZComplete fur Cats Premix (composition unknown)';
+    $('foodAmount').value = round(powder,1); $('foodUnit').value = 'g'; $('addFood').click();
+  });
+  $('ezcMeatGrams').addEventListener('input', () => { const g=Math.max(0,num($('ezcMeatGrams').value)); $('ezcPowderAmount').textContent=`Powder for ${round(g,1)} g meat: ${round(g*53.3/907,1)} g`; });
   $('foodSearch').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('addFood').click(); } });
   $('ingredientRows').addEventListener('change', e => { const el=e.target, i=num(el.dataset.index); if (!state.items[i] || !el.dataset.field) return; state.items[i][el.dataset.field] = el.dataset.field === 'unit' ? el.value : el.value === '' && el.dataset.field === 'price' ? '' : Math.max(0,num(el.value)); render(); });
   $('ingredientRows').addEventListener('click', e => { const button=e.target.closest('[data-remove]'); if (!button) return; state.items.splice(num(button.dataset.remove),1); render(); });
