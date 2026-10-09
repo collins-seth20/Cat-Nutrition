@@ -171,7 +171,8 @@
     if (!p) return;
     $('profileName').value = p.name || '';
     $('catName').value = p.cat || '';
-    $('breed').value = p.breed || 'Domestic Shorthair / mixed';
+    const savedBreed = p.breed || 'Domestic Shorthair / mixed';
+    $('breed').value = savedBreed.toLowerCase() === 'domestic shorthair / mixed' ? 'Domestic Shorthair / mixed' : savedBreed;
     $('weight').value = p.weight || '';
     $('weightUnit').value = p.weightUnit || 'Pounds';
     $('age').value = p.age ?? '';
