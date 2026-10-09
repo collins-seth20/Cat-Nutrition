@@ -31,10 +31,8 @@
     </section>
 
     <section id="meal" class="card">
-      <div class="section-head"><div><span class="step">02</span><h2>Build the meal</h2></div><p>Search 422 workbook entries or choose Collins — Pork Alternatives.</p></div>
-      <div class="option-note"><strong>Collins — Pork Alternatives</strong><span>Three plain ground-meat options with nutrient data from matching raw USDA entries already in the workbook. These are ingredient substitutions; recalculate the full recipe after swapping.</span></div>
-      <div id="collinsOptions" class="collins-options" aria-label="Collins pork alternative options"></div>
-      <div class="add-row"><label>Ingredient collection<select id="foodCollection"><option value="all">All foods and products</option><option value="collins">Collins — Pork Alternatives</option></select></label><label class="wide">Food or product<input id="foodSearch" list="foodOptions" placeholder="Start typing, for example raw beef liver"><datalist id="foodOptions"></datalist></label><label>Amount<input id="foodAmount" type="number" min="0" step="0.01" value="1"></label><label>Unit<select id="foodUnit"><option>g</option><option>mg</option><option>µg</option><option selected>oz</option><option>lbs</option><option>pills/tablets</option><option>drops</option><option>tsp</option></select></label><button id="addFood" class="accent" type="button">Add food</button></div>
+      <div class="section-head"><div><span class="step">02</span><h2>Build the meal</h2></div><p>Search the 422 foods and products from the workbook.</p></div>
+      <div class="add-row"><label class="wide">Food or product<input id="foodSearch" list="foodOptions" placeholder="Start typing, for example raw beef liver"><datalist id="foodOptions"></datalist></label><label>Amount<input id="foodAmount" type="number" min="0" step="0.01" value="1"></label><label>Unit<select id="foodUnit"><option>g</option><option>mg</option><option>µg</option><option selected>oz</option><option>lbs</option><option>pills/tablets</option><option>drops</option><option>tsp</option></select></label><button id="addFood" class="accent" type="button">Add food</button></div>
       <div class="table-wrap"><table><thead><tr><th>Food</th><th>Amount</th><th>Unit</th><th>Energy</th><th>Cost per unit</th><th></th></tr></thead><tbody id="ingredientRows"></tbody></table></div>
       <div class="table-foot"><span id="mealTotal">Meal total: —</span><button id="clearMeal" type="button" class="quiet">Clear ingredients</button></div>
     </section>
