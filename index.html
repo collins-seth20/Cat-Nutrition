@@ -18,7 +18,7 @@
       <div class="profile-bar"><label>Load a profile<select id="profileSelect"><option value="">Choose a profile…</option></select></label><button id="loadProfile" type="button">Load</button><label>Profile name<input id="profileName" placeholder="Name this recipe"></label><button id="saveProfile" type="button" class="accent">Save locally</button><button id="deleteProfile" type="button" class="quiet">Move saved profile to archive</button></div>
       <div class="form-grid">
         <label>Cat’s name<input id="catName" value=""></label>
-        <label>Breed<select id="breed"><option>Domestic shorthair / mixed</option><option>Maine Coon</option><option>Other</option></select></label>
+        <label>Breed<select id="breed"><option>Domestic Shorthair / mixed</option><option>Maine Coon</option><option>Sphynx</option><option>Russian Blue</option><option>Persian</option><option>Ragdoll</option><option>British Shorthair</option><option>Siamese</option><option>Bengal</option><option>Other</option></select></label>
         <label>Weight<input id="weight" type="number" min="0.01" step="0.01" value=""></label>
         <label>Weight unit<select id="weightUnit"><option>Pounds</option><option>Kilograms</option></select></label>
         <label>Age<input id="age" type="number" min="0" step="0.1" value=""></label>
@@ -29,7 +29,7 @@
       </div>
       <div class="metrics"><div><span>Daily calorie estimate</span><strong id="calories">—</strong><small>kcal / day</small></div><div><span>Average food estimate</span><strong id="foodEstimate">—</strong><small id="foodEstimateUnit">ounces / day</small></div><div><span>Life stage used</span><strong id="lifeStage">—</strong><small>for nutrient references</small></div></div>
       <p class="note">Food weight is a starting estimate from the workbook. Calorie needs and individual response can vary.</p>
-      <p id="breedNote" class="caution" hidden>Maine Coons may continue maturing in size longer than other cats, but current veterinary nutrition guidance does not establish kitten nutrient targets or extra calories through age five. This calculator keeps standard feline age stages; review weight and body condition with your veterinarian.</p>
+      <div id="breedNote" class="caution" role="status" aria-live="polite"></div>
     </section>
 
     <section id="meal" class="card">
