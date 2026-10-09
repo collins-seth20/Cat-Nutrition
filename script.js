@@ -3,6 +3,18 @@
   const DATA = window.CAT_DATA;
   const $ = id => document.getElementById(id);
   const foodByName = new Map(DATA.foods.map(food => [food.name.toLowerCase(), food]));
+  const breedGuidance = {
+    'Domestic Shorthair / mixed': 'Mixed-breed baseline. No breed multiplier is used; the estimate responds to the entered weight, age, reproductive status, and weight status.',
+    'Maine Coon': 'TICA describes Maine Coons as reaching full physical maturity around 4–5 years. That breed-standard statement does not establish growth-formula nutrition through age five. This calculator keeps standard feline age stages and does not add calories for breed alone.',
+    'Sphynx': 'No validated Sphynx-specific calorie or nutrient multiplier is included. Use the cat’s measured weight and veterinarian-assessed body condition; follow a separate veterinary plan for diagnosed conditions.',
+    'Russian Blue': 'No validated Russian Blue-specific calorie or nutrient multiplier is included. Use the cat’s measured weight and veterinarian-assessed body condition.',
+    'Persian': 'No validated Persian-specific calorie or nutrient multiplier is included. Breed-linked health concerns do not by themselves define a diet; use veterinary recommendations for any diagnosed condition.',
+    'Ragdoll': 'No validated Ragdoll-specific calorie or nutrient multiplier is included. Larger frame alone is not a reason to use a different nutrient target; use measured weight and body condition.',
+    'British Shorthair': 'No validated British Shorthair-specific calorie or nutrient multiplier is included. Use the weight-status input and veterinarian-assessed body condition instead of a breed weight target.',
+    'Siamese': 'No validated Siamese-specific calorie or nutrient multiplier is included. Use the cat’s measured weight and veterinarian-assessed body condition.',
+    'Bengal': 'No validated Bengal-specific calorie or nutrient multiplier is included. Individual activity may affect actual needs; discuss changes with your veterinarian rather than applying a breed-wide increase.',
+    'Other': 'No breed-specific multiplier is applied. The estimate responds to measured weight, age, reproductive status, and weight status; use a veterinarian’s individual assessment.'
+  };
   const profileKey = 'cat-formulator-profiles-v1';
   const archivedKey = 'cat-formulator-profile-archive-v1';
   const state = { items: [], profiles: readStore(profileKey, {}), archive: readStore(archivedKey, {}), selectedProfile: '' };
@@ -94,7 +106,8 @@
     $('foodEstimate').textContent = amount > 0 ? round(amount, 1) : '—';
     $('foodEstimateUnit').textContent = $('weightUnit').value === 'Pounds' ? 'ounces / day' : 'grams / day';
     $('lifeStage').textContent = ({kitten:'Growth',adult:'Adult',gestation:'Gestation',lactation:'Lactation'})[ageStage()];
-    $('breedNote').hidden = $('breed').value !== 'Maine Coon';
+    const breed = $('breed').value;
+    $('breedNote').textContent = `Breed guidance · ${breed}: ${breedGuidance[breed] || breedGuidance.Other} Breed selection does not change the workbook’s formulas.`;
   }
   function renderIngredients(t) {
     $('ingredientRows').innerHTML = state.items.map((item, index) => {
@@ -158,7 +171,7 @@
     if (!p) return;
     $('profileName').value = p.name || '';
     $('catName').value = p.cat || '';
-    $('breed').value = p.breed || 'Domestic shorthair / mixed';
+    $('breed').value = p.breed || 'Domestic Shorthair / mixed';
     $('weight').value = p.weight || '';
     $('weightUnit').value = p.weightUnit || 'Pounds';
     $('age').value = p.age ?? '';
