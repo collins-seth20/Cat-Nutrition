@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cat Meal Formulator · Local</title>
+  <title>Cat Meal Formulator</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,10 +17,11 @@
       <div class="section-head"><div><span class="step">01</span><h2>Your cat</h2></div><p>Energy and food weight follow the workbook’s age and status formulas.</p></div>
       <div class="profile-bar"><label>Load a profile<select id="profileSelect"><option value="">Choose a profile…</option></select></label><button id="loadProfile" type="button">Load</button><label>Profile name<input id="profileName" placeholder="Name this recipe"></label><button id="saveProfile" type="button" class="accent">Save locally</button><button id="deleteProfile" type="button" class="quiet">Move saved profile to archive</button></div>
       <div class="form-grid">
-        <label>Cat’s name<input id="catName" value="Echo"></label>
-        <label>Weight<input id="weight" type="number" min="0.01" step="0.01" value="8.6"></label>
+        <label>Cat’s name<input id="catName" value=""></label>
+        <label>Breed<select id="breed"><option>Domestic shorthair / mixed</option><option>Maine Coon</option><option>Other</option></select></label>
+        <label>Weight<input id="weight" type="number" min="0.01" step="0.01" value=""></label>
         <label>Weight unit<select id="weightUnit"><option>Pounds</option><option>Kilograms</option></select></label>
-        <label>Age<input id="age" type="number" min="0" step="0.1" value="12"></label>
+        <label>Age<input id="age" type="number" min="0" step="0.1" value=""></label>
         <label>Age unit<select id="ageUnit"><option>Weeks</option><option selected>Months</option><option>Years (1 or more)</option></select></label>
         <label>Spay / neuter<select id="neuter"><option>Intact</option><option selected>Spayed or Neutered</option></select></label>
         <label>Weight status<select id="status"><option>Maintain or Kitten</option><option>Overweight</option><option selected>Inactive or Obese Prone</option></select></label>
@@ -28,10 +29,12 @@
       </div>
       <div class="metrics"><div><span>Daily calorie estimate</span><strong id="calories">—</strong><small>kcal / day</small></div><div><span>Average food estimate</span><strong id="foodEstimate">—</strong><small id="foodEstimateUnit">ounces / day</small></div><div><span>Life stage used</span><strong id="lifeStage">—</strong><small>for nutrient references</small></div></div>
       <p class="note">Food weight is a starting estimate from the workbook. Calorie needs and individual response can vary.</p>
+      <p id="breedNote" class="caution" hidden>Maine Coons may continue maturing in size longer than other cats, but current veterinary nutrition guidance does not establish kitten nutrient targets or extra calories through age five. This calculator keeps standard feline age stages; review weight and body condition with your veterinarian.</p>
     </section>
 
     <section id="meal" class="card">
       <div class="section-head"><div><span class="step">02</span><h2>Build the meal</h2></div><p>Search the 422 foods and products from the workbook.</p></div>
+      <div class="ezc-helper"><strong>EZComplete fur Cats premix</strong><p>Manufacturer batch guide: for 2 lb (907 g) of boneless meat, use 53.3 g premix and 1½ cups water. Enter the raw boneless meat weight to calculate the powder amount. The premix catalog entry has no validated per-100-g nutrient profile, so nutrition review stays marked unknown. The manufacturer describes the finished diet as averaging 5% fat as-fed; fattier ground meats may not match that guidance. Use only as directed: boneless meat, no added organ or calcium, and do not add powder to an already complete diet. Food Fur Life recommends cooking poultry.</p><div class="ezc-controls"><label>Raw boneless meat (g)<input id="ezcMeatGrams" type="number" min="1" step="1" value="907"></label><button id="ezcAddPremix" type="button">Add calculated premix</button></div><small id="ezcPowderAmount">Powder for 907 g meat: 53.3 g</small></div>
       <div class="add-row"><label class="wide">Food or product<input id="foodSearch" list="foodOptions" placeholder="Start typing, for example raw beef liver"><datalist id="foodOptions"></datalist></label><label>Amount<input id="foodAmount" type="number" min="0" step="0.01" value="1"></label><label>Unit<select id="foodUnit"><option>g</option><option>mg</option><option>µg</option><option selected>oz</option><option>lbs</option><option>pills/tablets</option><option>drops</option><option>tsp</option></select></label><button id="addFood" class="accent" type="button">Add food</button></div>
       <div class="table-wrap"><table><thead><tr><th>Food</th><th>Amount</th><th>Unit</th><th>Energy</th><th>Cost per unit</th><th></th></tr></thead><tbody id="ingredientRows"></tbody></table></div>
       <div class="table-foot"><span id="mealTotal">Meal total: —</span><button id="clearMeal" type="button" class="quiet">Clear ingredients</button></div>
