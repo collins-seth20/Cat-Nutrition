@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cat Meal Formulator · Local</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div><div class="eyebrow">LOCAL CAT NUTRITION WORKSPACE</div><h1>Cat Meal Formulator</h1><p>Build a meal from the workbook’s food data, inspect nutrients, and plan a batch.</p></div>
+    <div class="header-mark" aria-hidden="true">✦</div>
+  </header>
+  <main>
+    <nav class="tabs" aria-label="Sections"><a href="#cat">Cat &amp; profile</a><a href="#meal">Meal builder</a><a href="#nutrition">Nutrition</a><a href="#batch">Batching</a></nav>
+    <section id="cat" class="card">
+      <div class="section-head"><div><span class="step">01</span><h2>Your cat</h2></div><p>Energy and food weight follow the workbook’s age and status formulas.</p></div>
+      <div class="profile-bar"><label>Load a profile<select id="profileSelect"><option value="">Choose a profile…</option></select></label><button id="loadProfile" type="button">Load</button><label>Profile name<input id="profileName" placeholder="Name this recipe"></label><button id="saveProfile" type="button" class="accent">Save locally</button><button id="deleteProfile" type="button" class="quiet">Move saved profile to archive</button></div>
+      <div class="form-grid">
+        <label>Cat’s name<input id="catName" value="Echo"></label>
+        <label>Weight<input id="weight" type="number" min="0.01" step="0.01" value="8.6"></label>
+        <label>Weight unit<select id="weightUnit"><option>Pounds</option><option>Kilograms</option></select></label>
+        <label>Age<input id="age" type="number" min="0" step="0.1" value="12"></label>
+        <label>Age unit<select id="ageUnit"><option>Weeks</option><option selected>Months</option><option>Years (1 or more)</option></select></label>
+        <label>Spay / neuter<select id="neuter"><option>Intact</option><option selected>Spayed or Neutered</option></select></label>
+        <label>Weight status<select id="status"><option>Maintain or Kitten</option><option>Overweight</option><option selected>Inactive or Obese Prone</option></select></label>
+        <label>Pregnancy status<select id="pregnancy"><option>N/A</option><option>Gestation</option><option>Lactation</option></select></label>
+      </div>
+      <div class="metrics"><div><span>Daily calorie estimate</span><strong id="calories">—</strong><small>kcal / day</small></div><div><span>Average food estimate</span><strong id="foodEstimate">—</strong><small id="foodEstimateUnit">ounces / day</small></div><div><span>Life stage used</span><strong id="lifeStage">—</strong><small>for nutrient references</small></div></div>
+      <p class="note">Food weight is a starting estimate from the workbook. Calorie needs and individual response can vary.</p>
+    </section>
+
+    <section id="meal" class="card">
+      <div class="section-head"><div><span class="step">02</span><h2>Build the meal</h2></div><p>Search 422 workbook entries or choose Collins — Pork Alternatives.</p></div>
+      <div class="option-note"><strong>Collins — Pork Alternatives</strong><span>Three plain ground-meat options with nutrient data from matching raw USDA entries already in the workbook. These are ingredient substitutions; recalculate the full recipe after swapping.</span></div>
+      <div id="collinsOptions" class="collins-options" aria-label="Collins pork alternative options"></div>
+      <div class="add-row"><label>Ingredient collection<select id="foodCollection"><option value="all">All foods and products</option><option value="collins">Collins — Pork Alternatives</option></select></label><label class="wide">Food or product<input id="foodSearch" list="foodOptions" placeholder="Start typing, for example raw beef liver"><datalist id="foodOptions"></datalist></label><label>Amount<input id="foodAmount" type="number" min="0" step="0.01" value="1"></label><label>Unit<select id="foodUnit"><option>g</option><option>mg</option><option>µg</option><option selected>oz</option><option>lbs</option><option>pills/tablets</option><option>drops</option><option>tsp</option></select></label><button id="addFood" class="accent" type="button">Add food</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Food</th><th>Amount</th><th>Unit</th><th>Energy</th><th>Cost per unit</th><th></th></tr></thead><tbody id="ingredientRows"></tbody></table></div>
+      <div class="table-foot"><span id="mealTotal">Meal total: —</span><button id="clearMeal" type="button" class="quiet">Clear ingredients</button></div>
+    </section>
+
+    <section id="nutrition" class="card">
+      <div class="section-head"><div><span class="step">03</span><h2>Nutrition review</h2></div><p>Compare the meal with the workbook’s calorie scaled targets.</p></div>
+      <div class="controls"><label>Guidelines<select id="guideline"><option>AAFCO</option><option>NRC</option><option>FEDIAF</option></select></label><label>Difference view<select id="differenceView"><option value="number">Amount</option><option value="percent">Percent of target</option></select></label><label>Nutrient spotlight<select id="nutrientSpotlight"></select></label><label>Ratio<select id="ratioSelect"><option>Zinc:Copper</option><option>Calcium:Copper</option><option>Iron:Copper</option><option>Zinc:Iron</option><option>Calcium:Phosphorous</option><option>Sodium:Potassium</option><option>LA:ALA</option><option>Vitamin A:Vitamin D (IU)</option></select></label></div>
+      <div class="summary-grid"><div class="summary-tile"><span>Meal energy</span><strong id="mealEnergy">—</strong><small id="energyStatus">—</small></div><div class="summary-tile"><span>Selected nutrient</span><strong id="spotlightValue">—</strong><small id="spotlightLabel">—</small></div><div class="summary-tile"><span>Selected ratio</span><strong id="ratioValue">—</strong><small id="ratioIdeal">—</small></div></div>
+      <p id="dataCaution" class="caution" hidden></p>
+      <div class="table-wrap nutrient-wrap"><table><thead><tr><th>Nutrient</th><th>In meal</th><th>Target</th><th id="differenceHeading">Difference</th><th>Review</th></tr></thead><tbody id="nutrientRows"></tbody></table></div>
+      <div class="pmr"><div><h3>PMR ratio analysis</h3><p>By ingredient weight and the workbook’s food classifications.</p></div><div id="pmrValues" class="pmr-values"></div></div>
+    </section>
+
+    <section id="batch" class="card">
+      <div class="section-head"><div><span class="step">04</span><h2>Batching &amp; cost</h2></div><p>Scale the current daily meal for a chosen period.</p></div>
+      <div class="controls"><label>Period<select id="batchPeriod"><option>Days</option><option>Weeks</option><option>Months (30 Days)</option></select></label><label>How many?<input id="batchCount" type="number" min="1" step="1" value="7"></label><label>Batch total unit<select id="batchUnit"><option>in grams</option><option>in ounces</option><option selected>in pounds</option><option>in kilograms</option></select></label><label>Currency<input id="currency" value="$" maxlength="4"></label><label>Prices are per<select id="priceUnit"><option value="g">gram</option><option value="oz">ounce</option><option value="lb" selected>pound</option><option value="kg">kilogram</option></select></label></div>
+      <div class="table-wrap"><table><thead><tr><th>Food</th><th>Daily amount</th><th>Batch amount</th><th>Batch cost</th></tr></thead><tbody id="batchRows"></tbody></table></div>
+      <div class="metrics two"><div><span>Total batch weight</span><strong id="batchTotal">—</strong></div><div><span>Known ingredient cost</span><strong id="costTotal">—</strong><small id="costNote">Enter prices to calculate.</small></div></div>
+    </section>
+    <footer><p>Based on the user’s <em>Cat Formulator v2.02</em> workbook. Blank source nutrients are treated as unknown; a recipe is never labeled nutritionally complete here. Consult a veterinary nutritionist before using a homemade diet as a sole food. Raw food also carries pathogen risks.</p><p><a href="https://www.fda.gov/animal-veterinary/animal-health-literacy/tips-safe-handling-pet-food-and-treats" target="_blank" rel="noreferrer">FDA raw food handling</a> · <a href="https://wsava.org/wp-content/uploads/2020/01/WSAVA-Nutrition-Assessment-Guidelines-2011-JSAP.pdf" target="_blank" rel="noreferrer">WSAVA nutrition assessment</a></p></footer>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="data.js"></script><script src="script.js"></script>
+</body>
+</html>
